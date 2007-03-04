@@ -1,0 +1,55 @@
+---
+name: Devel-ebug-Wx
+version: 0.01
+author:
+  - 'Mattia Barbon, C<< <mbarbon@cpan.org> >>'
+abstract: GUI interface for your (d)ebugging needs
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+requires:
+  Class::Accessor::Fast: 0.3
+  Class::Publisher: 0.2
+  Devel::ebug: 0.46
+  Module::Pluggable: 3.5
+  Wx: 0.61
+  Wx::AUI: 0
+  Wx::STC: 0
+provides:
+  Devel::ebug::Backend::Plugin::ActionPoints:
+    file: lib/Devel/ebug/Backend/Plugin/Wx.pm
+  Devel::ebug::Backend::Plugin::Wx:
+    file: lib/Devel/ebug/Backend/Plugin/Wx.pm
+  Devel::ebug::Plugin::Wx:
+    file: lib/Devel/ebug/Plugin/Wx.pm
+  Devel::ebug::Plugin::Wx::StackTraceFrame:
+    file: lib/Devel/ebug/Plugin/Wx.pm
+  Devel::ebug::Wx:
+    file: lib/Devel/ebug/Wx.pm
+    version: 0.01
+  Devel::ebug::Wx::Breakpoints::Pane:
+    file: lib/Devel/ebug/Wx/View/Breakpoints.pm
+  Devel::ebug::Wx::Command::Run:
+    file: lib/Devel/ebug/Wx/Command/Run.pm
+  Devel::ebug::Wx::Command::ShowFile:
+    file: lib/Devel/ebug/Wx/Command/ShowFile.pm
+  Devel::ebug::Wx::Command::Standard:
+    file: lib/Devel/ebug/Wx/Command/Standard.pm
+  Devel::ebug::Wx::Command::Views:
+    file: lib/Devel/ebug/Wx/Command/Views.pm
+  Devel::ebug::Wx::Publisher:
+    file: lib/Devel/ebug/Wx/Publisher.pm
+  Devel::ebug::Wx::View::Base:
+    file: lib/Devel/ebug/Wx/View/Base.pm
+  Devel::ebug::Wx::View::Breakpoints:
+    file: lib/Devel/ebug/Wx/View/Breakpoints.pm
+  Devel::ebug::Wx::View::Code::STC:
+    file: lib/Devel/ebug/Wx/View/Code/STC.pm
+  Devel::ebug::Wx::View::Eval:
+    file: lib/Devel/ebug/Wx/View/Eval.pm
+  Devel::ebug::Wx::View::StackTrace:
+    file: lib/Devel/ebug/Wx/View/StackTrace.pm
+generated_by: Module::Build version 0.2806
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
