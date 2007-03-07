@@ -6,8 +6,11 @@ use base qw(Class::Accessor::Fast Class::Publisher);
 __PACKAGE__->mk_ro_accessors( qw(ebug argv) );
 __PACKAGE__->mk_accessors( qw(_line _sub _package _file) );
 
+use Devel::ebug;
+
 sub new {
     my( $class, $ebug ) = @_;
+    $ebug ||= Devel::ebug->new;
     my $self = $class->SUPER::new( { ebug     => $ebug,
                                      _package => '',
                                      _line    => -1,
@@ -51,7 +54,7 @@ sub AUTOLOAD {
 
 sub load_program {
     my( $self, $argv ) = @_;
-    $self->{argv} = $argv || [];
+    $self->{argv} = $argv || $self->{argv} || [];
     my $filename = join ' ', @{$self->argv};
 
     unless ($filename) {

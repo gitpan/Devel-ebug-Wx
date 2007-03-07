@@ -10,7 +10,6 @@ use Wx qw(:sizer);
 sub tag         { 'breakpoints' }
 sub description { 'Breakpoints' }
 
-# FIXME read all breakpoints in constructor, or bad things will happen
 sub new {
     my( $class, $parent, $wxebug ) = @_;
     my $self = $class->SUPER::new( $parent, -1 );
@@ -22,15 +21,23 @@ sub new {
 
     $self->subscribe_ebug( 'break_point', sub { $self->_add_bp( @_ ) } );
     $self->subscribe_ebug( 'break_point_delete', sub { $self->_del_bp( @_ ) } );
+    $self->register_view;
 
     my $sizer = Wx::BoxSizer->new( wxVERTICAL );
     $self->SetSizer( $sizer );
 
     $self->sizer( $sizer );
 
+    $self->_add_bp( $wxebug->ebug, undef,
+                    file      => $_->[0],
+                    line      => $_->[1],
+                    condition => $_->[2],
+                    ) foreach $wxebug->ebug->all_break_points;
+
     return $self;
 }
 
+# FIXME ordering and duplicates
 sub _add_bp {
     my( $self, $ebug, $event, %params ) = @_;
 
@@ -70,7 +77,8 @@ sub delete {
 sub go_to {
     my( $self, $pane ) = @_;
 
-    $self->wxebug->code->highlight_line( $pane->file, $pane->line );
+    $self->wxebug->code_display_service
+         ->highlight_line( $pane->file, $pane->line );
 }
 
 sub set_condition {
@@ -136,8 +144,9 @@ sub display_bp {
     my( $self, $args ) = @_;
 
     my $text = basename( $args->{file} ) . ': ' . $args->{line};
+    my $cond = $args->{condition} || '';
     $self->controls->{label}->SetLabel( $text );
-    $self->controls->{condition}->SetValue( $args->{condition} || '' );
+    $self->controls->{condition}->SetValue( $cond eq '1' ? '' : $cond );
 }
 
 1;
