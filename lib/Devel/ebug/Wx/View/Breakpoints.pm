@@ -14,8 +14,6 @@ sub new {
     my( $class, $parent, $wxebug ) = @_;
     my $self = $class->SUPER::new( $parent, -1 );
 
-    $self->SetSize( 300, 200 ); # FIXME: absolute sizing is bad
-
     $self->wxebug( $wxebug );
     $self->panes( [] );
 
@@ -28,22 +26,38 @@ sub new {
 
     $self->sizer( $sizer );
 
-    $self->_add_bp( $wxebug->ebug, undef,
-                    file      => $_->[0],
-                    line      => $_->[1],
-                    condition => $_->[2],
-                    ) foreach $wxebug->ebug->all_break_points;
+    if( $wxebug->ebug->is_running ) {
+        $self->_add_bp( $wxebug->ebug, undef,
+                        file      => $_->[0],
+                        line      => $_->[1],
+                        condition => $_->[2],
+                      ) foreach $wxebug->ebug->all_break_points;
+    }
+
+    $self->SetSize( $self->default_size );
 
     return $self;
 }
 
-# FIXME ordering and duplicates
+sub _compare {
+    my( $x, $y ) = @_;
+    my $fc = $x->{file} cmp $y->{file};
+    return $fc if $fc != 0;
+    return $x->{line} <=> $y->{line};
+}
+
 sub _add_bp {
     my( $self, $ebug, $event, %params ) = @_;
 
+    my( $index, $order );
+    for( $index = 0; $index < @{$self->panes}; ++$index ) {
+        $order = _compare( \%params, $self->panes->[$index] );
+        return if $order == 0;
+        last if $order < 0;
+    }
     my $pane = Devel::ebug::Wx::Breakpoints::Pane->new( $self, \%params );
-    push @{$self->panes}, $pane;
-    $self->sizer->Add( $pane, 0, wxGROW );
+    splice @{$self->panes}, $index, 0, $pane;
+    $self->sizer->Insert( $index, $pane, 0, wxGROW );
     $self->SetScrollRate( 0, $pane->GetSize->y );
     # force relayout and reset virtual size
     $self->Layout;
@@ -55,8 +69,7 @@ sub _del_bp {
 
     my $index;
     for( $index = 0; $index < @{$self->panes}; ++$index ) {
-        last if    $params{file} eq $self->panes->[$index]->file
-                && $params{line} == $self->panes->[$index]->line;
+        last if _compare( \%params, $self->panes->[$index] ) == 0;
     }
     my $pane = $self->panes->[$index];
 

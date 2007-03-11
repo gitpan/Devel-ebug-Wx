@@ -6,10 +6,9 @@ use strict;
 use warnings;
 use base qw(Wx::Frame Class::Accessor::Fast);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Wx qw(:aui);
-use Wx::AUI;
 use Wx::Event qw(EVT_CLOSE);
 
 use Devel::ebug::Wx::Publisher;
@@ -86,7 +85,7 @@ The core is a publisher/subscriber wrapper around L<Devel::ebug>
 commands and keyboard bindings (L<Devel::ebug::Wx::Command::*>) and
 views (L<Devel::ebug::Wx::View::*>).
 
-The wxWidgets Advanced User Interface is used, so it is possible
+The wxWidgets Advanced User Interface (AUI) is used, so it is possible
 to dock/undock and arrange views.
 
 =head1 TODO
@@ -95,20 +94,28 @@ to dock/undock and arrange views.
 
 =item * make a saner interface for plugins
 
-what do commands do,
+what do commands do; better registration interface
 views have gui state that needs saving,
 global state of the debugger gui
+allow generic plugins to be views/commands/services at the same time?
 
 =item * define a service interface
 
 for example for code-viewing, configuration, gui management, view management
+allow enabling/dispabling services, commands, views
 
-=item * add more views (variable watch, data structure display)
+=item * add more views (package browser)
 
-=item * save GUI state between sessions
+=item * configuration interface
 
-optionally save the whole debugger state,
-state is distributed among plugins
+=item * notebooks
+
+better editing interface
+better debugging, edge cases still present, esp. at load time
+views must ba able to serialize themselves (neetds a proper format)
+composite for notebooks (common base for notebook and viewmanager?)
+
+=item * allow saving debugger state between session
 
 =item * handle the cases when the debugged program is terminated
 

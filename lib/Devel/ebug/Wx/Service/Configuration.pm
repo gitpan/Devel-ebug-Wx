@@ -7,7 +7,9 @@ __PACKAGE__->mk_ro_accessors( qw() );
 
 sub service_name { 'configuration' }
 sub initialized  { 1 }
+sub finalized    { 0 }
 
+# FIXME need a backend that can store multiline data for serialization
 sub new {
     my( $class, $wxebug ) = @_;
 
