@@ -16,7 +16,7 @@ Devel::ebug::Wx::Service::ViewManager - manage view docking/undocking
   $vm->register_view( $view );
   $vm->unregister_view( $view );
 
-  # both don't call ->register_view()
+  # both create_* methods don't call ->register_view()
   $vm->create_pane( $view, { name    => $tag,
                              caption => 'Displayed name',
                              float   => 1,
@@ -71,24 +71,24 @@ sub save_state {
 
     my $cfg = $self->wxebug->configuration_service->get_config( 'view_manager' );
     my( @xywh ) = ( $self->wxebug->GetPositionXY, $self->wxebug->GetSizeWH );
-    $cfg->Write( 'aui_perspective', $self->manager->SavePerspective );
-    $cfg->Write( 'views', join ',', map  $_->serialize,
-                                    grep $_->is_managed,
-                                         $self->active_views_list );
-    $cfg->Write( 'frame_geometry', sprintf '%d,%d,%d,%d', @xywh );
+    $cfg->set_value( 'aui_perspective', $self->manager->SavePerspective );
+    $cfg->set_serialized_value( 'views', [ map  $_->get_layout_state,
+                                           grep $_->is_managed,
+                                                $self->active_views_list ] );
+    $cfg->set_value( 'frame_geometry', sprintf '%d,%d,%d,%d', @xywh );
 }
 
 sub load_state {
     my( $self ) = @_;
 
-    # FIXME alignment between the AUI config and views
+    # FIXME alignment between the AUI config and views, grep out views
+    #       without perspective
     my $cfg = $self->wxebug->configuration_service->get_config( 'view_manager' );
-    my $profile = $cfg->Read( 'aui_perspective', '' );
-    my $views = $cfg->Read( 'views', '' );
-    foreach my $class ( split /,/, $views ) {
-        $class =~ /^([\w:]+)\((.*)\)$/ or next;
-        my $instance = $1->new( $self->wxebug, $self->wxebug );
-        $instance->load_state( $2 );
+    my $profile = $cfg->get_value( 'aui_perspective', '' );
+    my $views = $cfg->get_serialized_value( 'views', [] );
+    foreach my $view ( @$views ) {
+        my $instance = $view->{class}->new( $self->wxebug, $self->wxebug,
+                                            $view );
         my $pane_info = $self->pane_info->Name( $instance->tag )
             ->DestroyOnClose( 0 );
         $pane_info->DestroyOnClose( 1 ) unless Wx->VERSION > 0.67;
@@ -99,7 +99,12 @@ sub load_state {
 
     $self->manager->LoadPerspective( $profile ) if $profile;
 
-    my( @xywh ) = split ',', $cfg->Read( 'frame_geometry', ',,,' );
+    # destroy hidden multiviews (they can't currently be reshown)
+    $_->Destroy foreach grep $_->can( 'is_multiview' ) && $_->is_multiview,
+                        grep !$self->is_shown( $_->tag ),
+                             $self->active_views_list;
+
+    my( @xywh ) = split ',', $cfg->get_value( 'frame_geometry', ',,,' );
     if( length $xywh[0] ) {
         $self->wxebug->SetSize( @xywh );
     }

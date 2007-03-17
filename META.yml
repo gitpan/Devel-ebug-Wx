@@ -1,6 +1,6 @@
 ---
 name: Devel-ebug-Wx
-version: 0.03
+version: 0.04
 author:
   - 'Mattia Barbon, C<< <mbarbon@cpan.org> >>'
 abstract: GUI interface for your (d)ebugging needs
@@ -10,12 +10,14 @@ resources:
 requires:
   Class::Accessor: 0.27
   Class::Publisher: 0.2
+  Config::IniFiles: 2
   Devel::ebug: 0.46
+  File::UserConfig: 0.04
   Module::Pluggable: 3.1
   Wx: 0.61
   Wx::AUI: 0
   Wx::STC: 0
-  YAML: 0
+  YAML: 0.6
 build_requires:
   Test::UseAllModules: 0
 provides:
@@ -35,7 +37,7 @@ provides:
     file: lib/Devel/ebug/Plugin/Wx.pm
   Devel::ebug::Wx:
     file: lib/Devel/ebug/Wx.pm
-    version: 0.03
+    version: 0.04
   Devel::ebug::Wx::Breakpoints::Pane:
     file: lib/Devel/ebug/Wx/View/Breakpoints.pm
   Devel::ebug::Wx::Command::NotebookEdit:
@@ -57,6 +59,8 @@ provides:
   Devel::ebug::Wx::Service::CommandManager:
     file: lib/Devel/ebug/Wx/Service/CommandManager.pm
   Devel::ebug::Wx::Service::Configuration:
+    file: lib/Devel/ebug/Wx/Service/Configuration.pm
+  Devel::ebug::Wx::Service::Configuration::My:
     file: lib/Devel/ebug/Wx/Service/Configuration.pm
   Devel::ebug::Wx::Service::ViewManager:
     file: lib/Devel/ebug/Wx/Service/ViewManager.pm
@@ -83,6 +87,7 @@ provides:
 no_index:
   package:
     - Devel::ebug::Backend::Plugin::ActionPoints
+    - DB
 generated_by: Module::Build version 0.2806
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
