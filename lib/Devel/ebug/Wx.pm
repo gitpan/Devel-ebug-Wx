@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use base qw(Wx::Frame Class::Accessor::Fast);
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use Wx qw(:aui wxOK);
 use Wx::Event qw(EVT_CLOSE);
@@ -102,33 +102,50 @@ to dock/undock and arrange views.
 =item * make a saner interface for plugins
 
 what do commands do; better registration interface
-views have gui state that needs saving,
-global state of the debugger gui
-allow generic plugins to be views/commands/services at the same time?
+allow generic plugins to offer views/commands/services at the same time
 
 =item * define a service interface
 
-for example for code-viewing, configuration, gui management, view management
+for example for code-viewing, gui management, view management
 allow enabling/disabling services, commands, views
+auto-disable commands/views/services with clashing identifiers
 
 =item * add more views (package browser)
 
 =item * configuration interface
 
+ConfigurationManager service; lists all configuration views
+attribute to define configuration views (different from normal views)
+automatically tie configurator to configurable object
+interface to notify of configuration changes
+allow a configuration view to configure multiple
+  objects (by explicit registration)
+
 =item * notebooks
 
 better editing interface
-better debugging, edge cases still present, esp. at load time
-composite for notebooks (common base for notebook and viewmanager?)
+better debugging; edge cases still present, esp. at load time
+rethink container view interface and the whole concept of multiviews
 
-=item * allow saving debugger state between session
+=item * allow saving debugger state between sessions
 
-=item * to restore breakpoints etc. at program restart
+views have gui state that needs saving,
+global state of the debugger gui
+gui state might be in a different place from configuration state
+separate "debugged program" state (bp, expressions, view state) from
+  ebug_wx state (configuration and view layout); push temporary overlay on
+  configuration manager
 
 =item * better handling for program termination
 
 visual feedback in the main window
 disable commands/etc when they do not make sense
+
+=item * the command manager must allow dynamic menus
+
+command returns a (subscribable) handle that can be used to
+  poll/listen to changes
+explict use of update_ui is an hack!
 
 =item * break on subroutine, undo, watchpoints
 

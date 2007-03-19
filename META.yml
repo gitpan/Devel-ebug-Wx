@@ -1,6 +1,6 @@
 ---
 name: Devel-ebug-Wx
-version: 0.04
+version: 0.05
 author:
   - 'Mattia Barbon, C<< <mbarbon@cpan.org> >>'
 abstract: GUI interface for your (d)ebugging needs
@@ -11,7 +11,7 @@ requires:
   Class::Accessor: 0.27
   Class::Publisher: 0.2
   Config::IniFiles: 2
-  Devel::ebug: 0.46
+  Devel::ebug: 0.47
   File::UserConfig: 0.04
   Module::Pluggable: 3.1
   Wx: 0.61
@@ -23,21 +23,21 @@ build_requires:
 provides:
   DB:
     file: lib/Devel/ebug/Backend/Plugin/EvalLevel.pm
-  Devel::ebug::Backend::Plugin::ActionPoints:
-    file: lib/Devel/ebug/Backend/Plugin/Wx.pm
   Devel::ebug::Backend::Plugin::EvalLevel:
     file: lib/Devel/ebug/Backend/Plugin/EvalLevel.pm
-  Devel::ebug::Backend::Plugin::Wx:
-    file: lib/Devel/ebug/Backend/Plugin/Wx.pm
+  Devel::ebug::Backend::Plugin::State:
+    file: lib/Devel/ebug/Backend/Plugin/State.pm
   Devel::ebug::Plugin::EvalLevel:
     file: lib/Devel/ebug/Plugin/EvalLevel.pm
-  Devel::ebug::Plugin::Wx:
-    file: lib/Devel/ebug/Plugin/Wx.pm
+  Devel::ebug::Plugin::FoldedStackTrace:
+    file: lib/Devel/ebug/Plugin/FoldedStackTrace.pm
+  Devel::ebug::Plugin::State:
+    file: lib/Devel/ebug/Plugin/State.pm
   Devel::ebug::Plugin::Wx::StackTraceFrame:
-    file: lib/Devel/ebug/Plugin/Wx.pm
+    file: lib/Devel/ebug/Plugin/FoldedStackTrace.pm
   Devel::ebug::Wx:
     file: lib/Devel/ebug/Wx.pm
-    version: 0.04
+    version: 0.05
   Devel::ebug::Wx::Breakpoints::Pane:
     file: lib/Devel/ebug/Wx/View/Breakpoints.pm
   Devel::ebug::Wx::Command::NotebookEdit:
