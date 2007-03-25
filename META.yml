@@ -1,6 +1,6 @@
 ---
 name: Devel-ebug-Wx
-version: 0.05
+version: 0.06
 author:
   - 'Mattia Barbon, C<< <mbarbon@cpan.org> >>'
 abstract: GUI interface for your (d)ebugging needs
@@ -37,7 +37,7 @@ provides:
     file: lib/Devel/ebug/Plugin/FoldedStackTrace.pm
   Devel::ebug::Wx:
     file: lib/Devel/ebug/Wx.pm
-    version: 0.05
+    version: 0.06
   Devel::ebug::Wx::Breakpoints::Pane:
     file: lib/Devel/ebug/Wx/View/Breakpoints.pm
   Devel::ebug::Wx::Command::NotebookEdit:
@@ -48,6 +48,8 @@ provides:
     file: lib/Devel/ebug/Wx/Command/ShowFile.pm
   Devel::ebug::Wx::Command::Standard:
     file: lib/Devel/ebug/Wx/Command/Standard.pm
+  Devel::ebug::Wx::Command::State:
+    file: lib/Devel/ebug/Wx/Command/State.pm
   Devel::ebug::Wx::Command::Views:
     file: lib/Devel/ebug/Wx/Command/Views.pm
   Devel::ebug::Wx::Publisher:
@@ -65,6 +67,8 @@ provides:
   Devel::ebug::Wx::Service::ViewManager:
     file: lib/Devel/ebug/Wx/Service/ViewManager.pm
   Devel::ebug::Wx::ServiceManager:
+    file: lib/Devel/ebug/Wx/ServiceManager.pm
+  Devel::ebug::Wx::ServiceManager::Holder:
     file: lib/Devel/ebug/Wx/ServiceManager.pm
   Devel::ebug::Wx::View::Base:
     file: lib/Devel/ebug/Wx/View/Base.pm
