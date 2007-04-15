@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use base qw(Wx::Frame Devel::ebug::Wx::Service::Base Class::Accessor::Fast);
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use Wx qw(:aui wxOK);
 use Wx::Event qw(EVT_CLOSE);
@@ -105,8 +105,6 @@ allow generic plugins to offer views/commands/services at the same time
 for example for code-viewing, gui management, view management
 allow enabling/disabling services, commands, views
 auto-disable commands/views/services with clashing identifiers
-
-=item * add more views (package browser)
 
 =item * configuration interface
 

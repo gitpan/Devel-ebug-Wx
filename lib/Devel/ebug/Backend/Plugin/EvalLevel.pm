@@ -16,7 +16,7 @@ sub eval_level {
     my $res = DB::eval( $req, $context ); # FIXME breaks encapsulation
 
     unless( $res->{exception} ) {
-        $res->{eval} = _project( $res->{eval}, $req->{level} )
+        $res->{eval} = _project( $res->{eval}, $req->{level} );
     }
     return $res;
 }
@@ -70,9 +70,13 @@ sub project {
               };
 
     if( _cc( $v ) >= 0 ) {
-        $r->{keys} = [];
-        foreach my $kv ( @{_ckv( $v )} ) {
-            push @{$r->{keys}}, [ $kv->[0], project( $kv->[1], $l - 1 ) ];
+        if( !$l ) {
+            $r->{childs} = @{_ckv( $v )};
+        } else {
+            $r->{keys} = [];
+            foreach my $kv ( @{_ckv( $v )} ) {
+                push @{$r->{keys}}, [ $kv->[0], project( $kv->[1], $l - 1 ) ];
+            }
         }
     } else {
         $r->{value} = $v;

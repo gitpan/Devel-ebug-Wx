@@ -1,6 +1,6 @@
 ---
 name: Devel-ebug-Wx
-version: 0.06
+version: 0.07
 author:
   - 'Mattia Barbon, C<< <mbarbon@cpan.org> >>'
 abstract: GUI interface for your (d)ebugging needs
@@ -11,14 +11,17 @@ requires:
   Class::Accessor: 0.27
   Class::Publisher: 0.2
   Config::IniFiles: 2
+  Devel::Symdump: 2.07
   Devel::ebug: 0.47
   File::UserConfig: 0.04
   Module::Pluggable: 3.1
   Wx: 0.61
   Wx::AUI: 0
+  Wx::Perl::TreeView: 0.01
   Wx::STC: 0
   YAML: 0.6
 build_requires:
+  Test::Differences: 0
   Test::UseAllModules: 0
 provides:
   DB:
@@ -27,17 +30,21 @@ provides:
     file: lib/Devel/ebug/Backend/Plugin/EvalLevel.pm
   Devel::ebug::Backend::Plugin::State:
     file: lib/Devel/ebug/Backend/Plugin/State.pm
+  Devel::ebug::Backend::Plugin::SymbolBrowser:
+    file: lib/Devel/ebug/Backend/Plugin/SymbolBrowser.pm
   Devel::ebug::Plugin::EvalLevel:
     file: lib/Devel/ebug/Plugin/EvalLevel.pm
   Devel::ebug::Plugin::FoldedStackTrace:
     file: lib/Devel/ebug/Plugin/FoldedStackTrace.pm
   Devel::ebug::Plugin::State:
     file: lib/Devel/ebug/Plugin/State.pm
+  Devel::ebug::Plugin::SymbolBrowser:
+    file: lib/Devel/ebug/Plugin/SymbolBrowser.pm
   Devel::ebug::Plugin::Wx::StackTraceFrame:
     file: lib/Devel/ebug/Plugin/FoldedStackTrace.pm
   Devel::ebug::Wx:
     file: lib/Devel/ebug/Wx.pm
-    version: 0.06
+    version: 0.07
   Devel::ebug::Wx::Breakpoints::Pane:
     file: lib/Devel/ebug/Wx/View/Breakpoints.pm
   Devel::ebug::Wx::Command::NotebookEdit:
@@ -80,19 +87,25 @@ provides:
     file: lib/Devel/ebug/Wx/View/Eval.pm
   Devel::ebug::Wx::View::Expressions:
     file: lib/Devel/ebug/Wx/View/Expressions.pm
+  Devel::ebug::Wx::View::Expressions::Model:
+    file: lib/Devel/ebug/Wx/View/Expressions.pm
   Devel::ebug::Wx::View::Multi:
     file: lib/Devel/ebug/Wx/View/Multi.pm
   Devel::ebug::Wx::View::Notebook:
     file: lib/Devel/ebug/Wx/View/Notebook.pm
   Devel::ebug::Wx::View::Output:
     file: lib/Devel/ebug/Wx/View/Output.pm
+  Devel::ebug::Wx::View::PackageBrowser:
+    file: lib/Devel/ebug/Wx/View/PackageBrowser.pm
+  Devel::ebug::Wx::View::PackageBrowser::Model:
+    file: lib/Devel/ebug/Wx/View/PackageBrowser.pm
   Devel::ebug::Wx::View::StackTrace:
     file: lib/Devel/ebug/Wx/View/StackTrace.pm
 no_index:
   package:
     - Devel::ebug::Backend::Plugin::ActionPoints
     - DB
-generated_by: Module::Build version 0.2806
+generated_by: Module::Build version 0.2807
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2
