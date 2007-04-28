@@ -4,6 +4,7 @@ use Wx;
 
 use strict;
 use base qw(Wx::Panel Devel::ebug::Wx::View::Base);
+use Devel::ebug::Wx::Plugin qw(:plugin);
 
 # FIXME: ought to be a service, too
 __PACKAGE__->mk_accessors( qw(tree model) );
@@ -30,7 +31,7 @@ sub _call_on_idle($&) {
     EVT_IDLE( $window, $callback );
 }
 
-sub new {
+sub new : View {
     my( $class, $parent, $wxebug, $layout_state ) = @_;
     my $self = $class->SUPER::new( $parent, -1 );
 
@@ -68,9 +69,9 @@ sub new {
                 } );
     EVT_TEXT_ENTER( $self, $expression,
                     sub { $self->add_expression( $expression->GetValue ) } );
-    EVT_TREE_BEGIN_LABEL_EDIT( $self, $self->tree, \&_begin_edit );
-    EVT_TREE_END_LABEL_EDIT( $self, $self->tree, \&_end_edit );
-    EVT_TREE_KEY_DOWN( $self, $self->tree, \&_key_down );
+    EVT_TREE_BEGIN_LABEL_EDIT( $self, $tree, \&_begin_edit );
+    EVT_TREE_END_LABEL_EDIT( $self, $tree, \&_end_edit );
+    EVT_TREE_KEY_DOWN( $self, $tree, \&_key_down );
 
     $self->SetSize( $self->default_size );
 
@@ -140,7 +141,7 @@ sub _refresh {
 sub refresh {
     my( $self ) = @_;
 
-    $self->model->{_values} = [];
+    $self->model->_values( [] );
     $self->tree->refresh;
 }
 
@@ -149,9 +150,7 @@ package Devel::ebug::Wx::View::Expressions::Model;
 use strict;
 use base qw(Wx::Perl::TreeView::Model Class::Accessor::Fast);
 
-__PACKAGE__->mk_ro_accessors( qw(_expressions _values ebug) );
-
-sub abstract { 1 } # FIXME
+__PACKAGE__->mk_accessors( qw(_expressions _values ebug) );
 
 sub expressions { @{$_[0]->_expressions} }
 

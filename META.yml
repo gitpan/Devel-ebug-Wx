@@ -1,6 +1,6 @@
 ---
 name: Devel-ebug-Wx
-version: 0.07
+version: 0.08
 author:
   - 'Mattia Barbon, C<< <mbarbon@cpan.org> >>'
 abstract: GUI interface for your (d)ebugging needs
@@ -11,13 +11,14 @@ requires:
   Class::Accessor: 0.27
   Class::Publisher: 0.2
   Config::IniFiles: 2
+  Devel::StackTrace: 1.14
   Devel::Symdump: 2.07
   Devel::ebug: 0.47
   File::UserConfig: 0.04
   Module::Pluggable: 3.1
   Wx: 0.61
   Wx::AUI: 0
-  Wx::Perl::TreeView: 0.01
+  Wx::Perl::TreeView: 0.02
   Wx::STC: 0
   YAML: 0.6
 build_requires:
@@ -44,7 +45,7 @@ provides:
     file: lib/Devel/ebug/Plugin/FoldedStackTrace.pm
   Devel::ebug::Wx:
     file: lib/Devel/ebug/Wx.pm
-    version: 0.07
+    version: 0.08
   Devel::ebug::Wx::Breakpoints::Pane:
     file: lib/Devel/ebug/Wx/View/Breakpoints.pm
   Devel::ebug::Wx::Command::NotebookEdit:
@@ -59,6 +60,12 @@ provides:
     file: lib/Devel/ebug/Wx/Command/State.pm
   Devel::ebug::Wx::Command::Views:
     file: lib/Devel/ebug/Wx/Command/Views.pm
+  Devel::ebug::Wx::Plugin:
+    file: lib/Devel/ebug/Wx/Plugin.pm
+  Devel::ebug::Wx::Plugin::Configurable::Base:
+    file: lib/Devel/ebug/Wx/Plugin/Configurable/Base.pm
+  Devel::ebug::Wx::Plugin::Listener::Base:
+    file: lib/Devel/ebug/Wx/Plugin/Listener/Base.pm
   Devel::ebug::Wx::Publisher:
     file: lib/Devel/ebug/Wx/Publisher.pm
   Devel::ebug::Wx::Service::Base:
@@ -71,6 +78,10 @@ provides:
     file: lib/Devel/ebug/Wx/Service/Configuration.pm
   Devel::ebug::Wx::Service::Configuration::My:
     file: lib/Devel/ebug/Wx/Service/Configuration.pm
+  Devel::ebug::Wx::Service::ConfigurationManager:
+    file: lib/Devel/ebug/Wx/Service/ConfigurationManager.pm
+  Devel::ebug::Wx::Service::ConfigurationManager::Dialog:
+    file: lib/Devel/ebug/Wx/Service/ConfigurationManager.pm
   Devel::ebug::Wx::Service::ViewManager:
     file: lib/Devel/ebug/Wx/Service/ViewManager.pm
   Devel::ebug::Wx::ServiceManager:
@@ -83,6 +94,8 @@ provides:
     file: lib/Devel/ebug/Wx/View/Breakpoints.pm
   Devel::ebug::Wx::View::Code::STC:
     file: lib/Devel/ebug/Wx/View/Code/STC.pm
+  Devel::ebug::Wx::View::Configuration::Simple:
+    file: lib/Devel/ebug/Wx/View/Configuration/Simple.pm
   Devel::ebug::Wx::View::Eval:
     file: lib/Devel/ebug/Wx/View/Eval.pm
   Devel::ebug::Wx::View::Expressions:
@@ -103,7 +116,6 @@ provides:
     file: lib/Devel/ebug/Wx/View/StackTrace.pm
 no_index:
   package:
-    - Devel::ebug::Backend::Plugin::ActionPoints
     - DB
 generated_by: Module::Build version 0.2807
 meta-spec:
