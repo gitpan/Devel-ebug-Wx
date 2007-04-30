@@ -1,6 +1,6 @@
 ---
 name: Devel-ebug-Wx
-version: 0.08
+version: 0.09
 author:
   - 'Mattia Barbon, C<< <mbarbon@cpan.org> >>'
 abstract: GUI interface for your (d)ebugging needs
@@ -45,7 +45,7 @@ provides:
     file: lib/Devel/ebug/Plugin/FoldedStackTrace.pm
   Devel::ebug::Wx:
     file: lib/Devel/ebug/Wx.pm
-    version: 0.08
+    version: 0.09
   Devel::ebug::Wx::Breakpoints::Pane:
     file: lib/Devel/ebug/Wx/View/Breakpoints.pm
   Devel::ebug::Wx::Command::NotebookEdit:
